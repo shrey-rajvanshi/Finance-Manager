@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>Client</title>
+		<meta charset="utf-8">
+  		<meta name="viewport" content="width=device-width, initial-scale=1">
+  		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script type = "text/javascript" language = "javascript">
+         $(document).ready(function() {
+            $('#add-button').click(function(event){
+               $('#transaction-add-form').toggle();
+               $('#name').focus();
+            });
+            $('#transaction-add-form').submit(function(event){
+            	alert('yay');
+            });
+            $('#transaction-submit').click(function(event){
+            	event.preventDefault();
+            	console.log("submit pressed");
+            	if($('#amount').val()==""){
+            		$('#amount').focus();
+            	}
+            	else{
+            		$('#transaction-add-form').submit();
+            	}
+            });
+         });
+      </script>
+	</head>
+	<body>
+		<div class = "maincontainer" style="block">
+			<div class = "navbar navbar-inverse navbar-fixed-top">
+				<div class="container">
+			        <div id="navbar" class="collapse navbar-collapse">
+			          <ul class="nav navbar-nav">
+			            <li class="active"><a href="#">Home</a></li>
+			            <li><a href="about">About</a></li>
+			            <li><a href="contact">Contact</a></li>
+			          </ul>
+			        </div>
+		      	</div>
+	  		</div>
+			<div class = "transaction-container" style = "margin-top:60px;width: 50%;margin-left: 80px;">
+				{% for i in transactions %}
+					<div class ="row">
+					{{ i.name }}  {{ i.amount}} <br/>
+					</div>
+			{% endfor %}
+			</div>
+		</div>
+		<div class = "action-container" style = "margin-left: 200px;width: 20%;height: 10px;">
+			<button type="button" id="add-button" class="btn btn-primary">Add Expense</button>
+			<form id="transaction-add-form" class =".form-inline" style="display: none;">
+				<label for="name">Name:</label><input type="text" class="form-control" id="name"><br />
+				<label for="amount">Amount<input type="text" class="form-control" id="amount"><br />
+				<button type="submit" id="transaction-submit" class="btn btn-default">Submit</button>
+			</form>
+		</div>
+	</body>
+</html>

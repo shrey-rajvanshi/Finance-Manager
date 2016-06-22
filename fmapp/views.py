@@ -1,9 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask
 import flask
 import json
 from fmapp import app, db
 from fmapp.models import *
-
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -81,7 +80,3 @@ def withdraw(name, amount, wallet_id, category_id):
 
 
 # UI URLs
-
-@app.route('/home', methods=['GET', 'POST'])
-def home():
-    return render_template('home.html', name="shrey")
