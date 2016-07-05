@@ -13,11 +13,13 @@
                $('#name').focus();
             });
             $('#transaction-add-form').submit(function(event){
-            	alert('yay');
+            	$.post('../sub', { name: $('#name').val(), amount: $("#amount").val() })
+            	.done(function( data ) {
+    			alert( "Data Loaded: " + data );
+  				});
             });
             $('#transaction-submit').click(function(event){
             	event.preventDefault();
-            	console.log("submit pressed");
             	if($('#amount').val()==""){
             		$('#amount').focus();
             	}

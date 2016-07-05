@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 import flask
 import json
 from fmapp import app, db
@@ -78,5 +78,20 @@ def withdraw(name, amount, wallet_id, category_id):
     db.session.add(transaction)
     db.session.commit()
 
+
+@app.route('/sub', methods=['post'])
+def withdraw_client():
+    print request.form
+    name = request.form.get('name')
+    amount = request.form.get('amount')
+    wallet_id = request.form.get('wallet_id', 1)
+    category_id = request.form.get('category_id', 1)
+    transaction = Transaction(name, amount, wallet_id, category_id)
+    wallet = Wallet.query.get(wallet_id)
+    wallet.balance -= int(amount)
+    db.session.add(wallet)
+    db.session.add(transaction)
+    db.session.commit()
+    return "Transaction recorded"
 
 # UI URLs
