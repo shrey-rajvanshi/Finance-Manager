@@ -1,5 +1,5 @@
 from fmapp import app, db
-
+from datetime import datetime
 
 class Wallet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -20,6 +20,7 @@ class Transaction(db.Model):
     amount = db.Column(db.Integer)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     wallet_id = db.Column(db.Integer, db.ForeignKey('wallet.id'))
+    date = db.Column(db.DateTime, default=datetime.now)
 
     def __init__(self, name="", amount=0, wallet_id=1, category_id=1):
         self.name = name
