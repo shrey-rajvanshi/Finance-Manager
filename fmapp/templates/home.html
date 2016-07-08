@@ -13,7 +13,7 @@
                $('#name').focus();
             });
             $('#transaction-add-form').submit(function(event){
-            	$.post('../sub', { name: $('#name').val(), amount: $("#amount").val() })
+				$.post('../sub', { name: $('#name').val(), amount: $("#amount").val(), category_id: $('#category option:selected').val() })
             	.done(function( data ) {
     			alert( "Data Loaded: " + data );
   				});
@@ -29,6 +29,12 @@
             });
          });
       </script>
+      <style type="text/css">
+      #category {
+		width: 120px;
+		font-size:50px;
+      }
+      </style>
 	</head>
 	<body>
 		<div class = "maincontainer" style="block">
@@ -51,11 +57,18 @@
 			{% endfor %}
 			</div>
 		</div>
+
 		<div class = "action-container" style = "margin-left: 200px;width: 20%;height: 10px;">
 			<button type="button" id="add-button" class="btn btn-primary">Add Expense</button>
 			<form id="transaction-add-form" class =".form-inline" style="display: none;">
 				<label for="name">Name:</label><input type="text" class="form-control" id="name"><br />
 				<label for="amount">Amount<input type="text" class="form-control" id="amount"><br />
+				<select id = "category">
+					{% for i in categories %}
+					<option value = "{{i.id}}"> {{i.name}}</option>
+					{% endfor %}
+				</select>
+				<br /><br />
 				<button type="submit" id="transaction-submit" class="btn btn-default">Submit</button>
 			</form>
 		</div>
