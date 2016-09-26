@@ -3,11 +3,12 @@ import flask
 import json
 from fmapp import app
 from fmapp.models import *
+from sqlalchemy import desc
 
 
 @app.route('/home', methods=['GET', 'POST'])
 def home():
-    transactions_list = Transaction.query.all()
+    transactions_list = Transaction.query.order_by(desc(Transaction.date))
     transactions = json.dumps([x.json_dump() for x in transactions_list])
     categories_list = Category.query.all()
     categories = json.dumps([x.json_dump() for x in categories_list])
