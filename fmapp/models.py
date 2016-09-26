@@ -16,7 +16,7 @@ class Wallet(db.Model):
 
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True)
+    name = db.Column(db.String(80))
     amount = db.Column(db.Integer)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     wallet_id = db.Column(db.Integer, db.ForeignKey('wallet.id'))
