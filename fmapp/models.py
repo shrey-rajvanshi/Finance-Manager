@@ -32,7 +32,7 @@ class Transaction(db.Model):
         return str(self.amount) + ": "+self.name
 
     def json_dump(self):
-        return dict(name=self.name, amount = self.amount, category=self.category_id, date=self.date)
+        return dict(name=self.name, amount = self.amount, category=self.category_id, date=self.date.strftime('%d-%m-%Y'))
 
 
 
