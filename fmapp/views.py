@@ -14,7 +14,6 @@ def catch_all(path):
 def hello_shrey():
     return 'Hello, This is Shrey route!'
 
-
 #Wallet URLs
 
 @app.route('/wallets', methods=['GET'])
