@@ -54,6 +54,17 @@ class Tag(db.Model):
     def json_dump(self):
         return dict(id=self.id, name=self.name)
 
+class Tasks(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80))
+    importance = db.Column(db.Integer)
+    urgency = db.Column(db.Integer)
+
+    def __repr__(self):
+        return self.name
+
+    def json_dump(self):
+        return dict(id = self.id, name = self.name)
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
