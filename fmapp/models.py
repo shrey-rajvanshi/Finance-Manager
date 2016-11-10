@@ -27,7 +27,7 @@ class Transaction(db.Model):
     amount = db.Column(db.Integer)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     wallet_id = db.Column(db.Integer, db.ForeignKey('wallet.id'))
-    date = db.Column(db.DateTime, default=datetime.now)
+    date = db.Column(db.DateTime)
     tags = db.relationship('Tag', secondary=tags,
                            backref=db.backref('transactions', lazy='dynamic'))
 
@@ -36,6 +36,7 @@ class Transaction(db.Model):
         self.amount = amount
         self.wallet_id = wallet_id
         self.category_id = category_id
+        self.date = datetime.now()
 
     def __repr__(self):
         return str(self.amount) + ": "+self.name
