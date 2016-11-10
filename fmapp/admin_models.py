@@ -10,3 +10,4 @@ class TransactionAdmin(ModelView):
 admin.add_view(ModelView(Wallet, db.session))
 admin.add_view(ModelView(Category, db.session))
 admin.add_view(ModelView(Transaction, db.session))
+admin.add_view(ModelView(Tag, db.session))
