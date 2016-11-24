@@ -21,7 +21,7 @@ def home():
 def bored():
     transactions = json.dumps([x.json_dump() for x in Transaction.query.order_by(desc(Transaction.date))])
     categories = json.dumps([x.json_dump() for x in Category.query.all()])
-    tags = json.dumps([x.json_dump() for x in Tags.query.all()])
+    tags = json.dumps([x.json_dump() for x in Tag.query.all()])
 
     return render_template('bored.html', name="Bored", transactions=json.loads(transactions),
                            categories=json.loads(categories), tags=json.loads(tags))

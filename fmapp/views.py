@@ -78,6 +78,26 @@ def withdraw(name, amount, wallet_id, category_id):
     db.session.commit()
 
 
+@app.route('/sub/<name>/<int:amount>/<int:wallet_id>', methods=['post'])
+def uncategorizedWithdraw(name, amount, wallet_id):
+    category_id = getCategory(name)
+    transaction = Transaction(name, amount, wallet_id, category_id)
+    wallet = Wallet.query.get(wallet_id)
+    wallet.balance -= int(amount)
+    db.session.add(wallet)
+    db.session.add(transaction)
+    db.session.commit()
+
+
+def getCategory(name):
+    rule = Rule.query.filter(Rule.name == name).first()
+    if not rule:
+        category_id = Category.query.filter(Category.name == "Uncategorized").first().id
+    else:
+        category_id = rule.category_id
+    return category_id
+
+
 @app.route('/sub', methods=['post'])
 def withdraw_client():
     print request.form
@@ -92,5 +112,3 @@ def withdraw_client():
     db.session.add(transaction)
     db.session.commit()
     return "Transaction recorded"
-
-# UI URLs
