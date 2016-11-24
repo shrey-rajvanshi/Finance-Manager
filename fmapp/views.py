@@ -78,37 +78,27 @@ def withdraw(name, amount, wallet_id, category_id):
     db.session.commit()
 
 
-@app.route('/sub/<name>/<int:amount>/<int:wallet_id>', methods=['post'])
-def uncategorizedWithdraw(name, amount, wallet_id):
-    category_id = getCategory(name)
-    transaction = Transaction(name, amount, wallet_id, category_id)
-    wallet = Wallet.query.get(wallet_id)
-    wallet.balance -= int(amount)
-    db.session.add(wallet)
-    db.session.add(transaction)
-    db.session.commit()
-
-
 def getCategory(name):
     rule = CRule.query.filter(CRule.transaction_name == name).first()
     if not rule:
         category_id = Category.query.filter(Category.name == "Uncategorized").first().id   # or directly use 1
     else:
         category_id = rule.category_id
+
     return category_id
 
 
 @app.route('/sub', methods=['post'])
 def withdraw_client():
-    print request.form
     name = request.form.get('name')
     amount = request.form.get('amount')
     wallet_id = request.form.get('wallet_id', 1)
-    category_id = request.form.get('category_id', 1)
+    category_id = request.form.get('category_id', getCategory(name))
     transaction = Transaction(name, amount, wallet_id, category_id)
     wallet = Wallet.query.get(wallet_id)
     wallet.balance -= int(amount)
     db.session.add(wallet)
     db.session.add(transaction)
     db.session.commit()
+
     return "Transaction recorded"
