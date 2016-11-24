@@ -80,7 +80,13 @@ class Category(db.Model):
         return dict(id=self.id, name=self.name)
 
 
-class Rule(db.Model):
+class CRule(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    transaction_name = db.Column(db.String(80))
+    category_id = db.Column(db.Integer, primary_key=True)
+
+
+class TRule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     transaction_name = db.Column(db.String(80))
     category_id = db.Column(db.Integer, primary_key=True)

@@ -90,9 +90,9 @@ def uncategorizedWithdraw(name, amount, wallet_id):
 
 
 def getCategory(name):
-    rule = Rule.query.filter(Rule.name == name).first()
+    rule = CRule.query.filter(CRule.transaction_name == name).first()
     if not rule:
-        category_id = Category.query.filter(Category.name == "Uncategorized").first().id
+        category_id = Category.query.filter(Category.name == "Uncategorized").first().id   # or directly use 1
     else:
         category_id = rule.category_id
     return category_id
