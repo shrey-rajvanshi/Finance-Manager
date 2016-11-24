@@ -93,7 +93,7 @@ def withdraw_client():
     name = request.form.get('name')
     amount = request.form.get('amount')
     wallet_id = request.form.get('wallet_id', 1)
-    category_id = request.form.get('category_id', getCategory(name))
+    category_id = getCategory(name)
     transaction = Transaction(name, amount, wallet_id, category_id)
     wallet = Wallet.query.get(wallet_id)
     wallet.balance -= int(amount)
