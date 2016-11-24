@@ -12,3 +12,6 @@ Steps to deploy:
 [optional]
 
 ```pip install -r requirements.txt```
+
+
+Add category for 'Uncategorized'
