@@ -4,9 +4,11 @@
 
 	{% for i in categories %}
 		{{i.name}}  <img src = static/images/{{ i.name | replace(' ','-') }}.png height="50px" width="50px"></img>
+		{{i.name}} 
 		{% for t in i.transactions %}
-			{{t.name}} {{t.amount}} <br/>
+			{{t.name}} {{t.amount}}
 		{% endfor %}
+		<h3>!!!!!!------------!!!!!!</h3>
 	{% endfor %}
 
 </body>
