@@ -1,10 +1,10 @@
 <html>
 <body>
-<h1>'I am bored'<h1>
+<h1>'I am bored'</h1>
 
 	{% for i in categories %}
-		{{i.name}}
-		{% for t in i.transactions%}
+		{{i.name}} 
+		{% for t in i.transactions %}
 			{{t.name}} {{t.amount}}
 		{% endfor %}
 		<h3>!!!!!!------------!!!!!!</h3>
