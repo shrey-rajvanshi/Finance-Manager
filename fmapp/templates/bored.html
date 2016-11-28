@@ -3,10 +3,10 @@
 <h1>'I am bored'</h1>
 
 	{% for i in categories %}
-		{{i.name}}  <img src = static/images/{{ i.name | replace(' ','-') }}.png height="50px" width="50px"></img>
-		{{i.name}} 
+		<h2> {{i.name}} </h2>  <img src = static/images/{{ i.name | replace(' ','-') }}.png height="50px" width="50px"></img> <br/>
+		{{i.name}} <br/>
 		{% for t in i.transactions %}
-			{{t.name}} {{t.amount}}
+			{{t.name}} {{t.amount}} <br/>
 		{% endfor %}
 		<h3>!!!!!!------------!!!!!!</h3>
 	{% endfor %}
