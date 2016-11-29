@@ -22,7 +22,7 @@ align-items:center;
                         <div class = "title"> {{i.name}}
                         <img src = static/images/{{ i.name | replace(' ','-') }}.png height="50px" width="50px"></img> <br/> </div>
                         {% for t in i.transactions %}
-                                {{t.name}} {{t.amount}} <br/>
+ 			<div class = "transaction" id={{t.id}}>       {{t.name}} {{t.amount}} <br/></div>
                         {% endfor %}
                 </div>
         {% endfor %}
