@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request, redirect, url_for, render_template
 from flask_login import login_required, login_user, current_user, logout_user
 import flask
 import json
