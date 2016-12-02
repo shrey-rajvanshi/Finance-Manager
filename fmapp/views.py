@@ -1,8 +1,12 @@
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for
+from flask_login import login_required, login_user, current_user, logout_user
 import flask
 import json
 from fmapp import app, db
 from fmapp.models import *
+from fmapp.forms import *
+import response as Response
+
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -88,6 +92,7 @@ def getCategory(name):
     return category_id
 
 
+@login_required
 @app.route('/sub', methods=['post'])
 def withdraw_client():
     name = request.form.get('name')
@@ -102,3 +107,29 @@ def withdraw_client():
     db.session.commit()
 
     return "Transaction recorded"
+
+
+@app.route('/login', methods=['post, get'])
+def login():
+    if current_user.is_authenticated():
+        return "You are already logged in"
+    form = LoginForm()
+    error = None
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user, authenticated = User.authenticate(form.login.data, form.password.data)
+            if user:
+                if authenticated:
+                    login_user(user, remember=form.remember_me.data)
+                    return redirect(url_for('home'))
+                else:
+                    error += "User Not authenticated"
+            else:
+                return "No user found with this name"
+    return render_template('login.html', error=error)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return "Successfully logged out"
