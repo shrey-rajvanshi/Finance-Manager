@@ -5,7 +5,6 @@ import json
 from fmapp import app, db
 from fmapp.models import *
 from fmapp.forms import *
-import response as Response
 
 
 @app.route('/', defaults={'path': ''})
