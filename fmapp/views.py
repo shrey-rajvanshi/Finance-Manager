@@ -5,7 +5,7 @@ import json
 from fmapp import app, db
 from fmapp.models import *
 from fmapp.forms import *
-
+from fmapp.core_models import *
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -110,7 +110,7 @@ def withdraw_client():
 
 @app.route('/login', methods=['post', 'get'])
 def login():
-    if current_user.is_authenticated():
+    if current_user.is_authenticated:
         return "You are already logged in"
     form = LoginForm()
     error = None
