@@ -108,7 +108,7 @@ def withdraw_client():
     return "Transaction recorded"
 
 
-@app.route('/login', methods=['post, get'])
+@app.route('/login', methods=['post', 'get'])
 def login():
     if current_user.is_authenticated():
         return "You are already logged in"
