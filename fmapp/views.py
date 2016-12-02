@@ -116,7 +116,7 @@ def login():
     error = None
     if request.method == 'POST':
         if form.validate_on_submit():
-            user, authenticated = User.authenticate(form.login.data, form.password.data)
+            user, authenticated = User.authenticate(form.username.data, form.password.data)
             if user:
                 if authenticated:
                     login_user(user, remember=form.remember_me.data)

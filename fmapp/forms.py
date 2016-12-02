@@ -3,9 +3,12 @@ from wtforms import BooleanField, TextField, PasswordField, validators
 
 
 class LoginForm(Form):
-    login = TextField('user_name', [validators.Required()])
+    username = TextField('user_name', [validators.Required()])
     password = TextField('password',  [validators.Required()])
     remember_me = BooleanField('remember_me', default=False)
+
+    def __repr__(self):
+        return self.username+" "+self.password
 
 
 class SignupForm(Form):

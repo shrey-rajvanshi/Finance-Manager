@@ -7,10 +7,11 @@ from fmapp import *
 class User(db.Model, UserMixin):
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String)
-    password = db.Column(db.String)
+    username = db.Column(db.String(80))
+    email = db.Column(db.String(80))
+    password = db.Column(db.String(80))
     authenticated = db.Column(db.Boolean, default=False)
-    last_synced = db.Column(db.String)
+    last_synced = db.Column(db.String(10))
 
     def get_id(self):
         return self.id
@@ -23,7 +24,7 @@ class User(db.Model, UserMixin):
     # methods
     @classmethod
     def authenticate(cls, user_name, password):
-        user = User.query.filter(db.or_(User.user_name == user_name)).first()
+        user = User.query.filter(db.or_(User.username == user_name)).first()
         if user:
             authenticated = user.check_password(password)
         else:
@@ -32,7 +33,7 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def is_user_name_taken(cls, user_name):
-        return db.session.query(db.exists().where(User.user_name == user_name)).scalar()
+        return db.session.query(db.exists().where(User.username == user_name)).scalar()
 
     @classmethod
     def is_email_taken(cls, email_address):
