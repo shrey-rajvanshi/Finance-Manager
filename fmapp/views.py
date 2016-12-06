@@ -4,7 +4,7 @@ import flask
 import json
 from fmapp import app, db
 from fmapp.models import *
-from fmapp.forms import *
+from fmapp.forms import LoginForm, SignupForm
 from fmapp.core_models import *
 
 @app.route('/', defaults={'path': ''})
@@ -134,3 +134,21 @@ def logout():
     return "Successfully logged out"
 
 
+@app.route('/signup', methods=['post', 'get'])
+def signup():
+    if current_user.is_authenticated:
+        return "You are already logged in"
+    form = SignupForm()
+    error = None
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            user = User(form.username.data, form.password.data, form.email.data)
+            if user:
+                db.session.add(user)
+                db.session.commit()
+                return redirect(url_for('home'))
+            else:
+                error += "Some problem with signup"
+        else:
+            return "Some validation error"
+    return render_template('signup.html', error=error)

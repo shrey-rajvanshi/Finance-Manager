@@ -12,7 +12,7 @@ class LoginForm(Form):
 
 
 class SignupForm(Form):
-    user_name = TextField('user_name',   [
+    username = TextField('user_name',   [
         validators.Length(
             min=4,
             max=15
@@ -22,14 +22,8 @@ class SignupForm(Form):
             message="Username can only contain letters and numbers"
         )
     ])
-    first_name = TextField('first_name', [validators.Required()])
-    last_name = TextField('last_name', [validators.Required()])
     email = TextField('email', [validators.Required(), validators.Email()])
     password = PasswordField(
         'New Password',
         [validators.Length(min=3, max=10)]
     )
-    confirm = PasswordField('Repeat Password', [
-        validators.Required(),
-        validators.EqualTo('password', message='Passwords must match')
-    ])

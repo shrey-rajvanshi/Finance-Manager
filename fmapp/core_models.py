@@ -13,6 +13,12 @@ class User(db.Model, UserMixin):
     authenticated = db.Column(db.Boolean, default=False)
     last_synced = db.Column(db.String(10))
 
+    def __init__(self, username, password, email):
+        self.username = username
+        self.email = email
+        self.password = password
+        self.authenticated = False
+
     def get_id(self):
         return self.id
 
