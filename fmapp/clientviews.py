@@ -3,10 +3,11 @@ import flask
 import json
 from fmapp import app
 from fmapp.models import *
-from flask_login import current_user
+from flask_login import current_user, login_required
 from sqlalchemy import desc
 
 
+@login_required
 @app.route('/home', methods=['GET', 'POST'])
 def home():
     current_user_id = current_user.id
