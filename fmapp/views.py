@@ -132,3 +132,5 @@ def login():
 def logout():
     logout_user()
     return "Successfully logged out"
+
+

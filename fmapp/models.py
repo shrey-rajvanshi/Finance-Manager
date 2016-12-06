@@ -1,10 +1,11 @@
 from fmapp import db
 from datetime import datetime
-
+from fmapp.core_models import User
 
 class Wallet(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     balance = db.Column(db.Integer)
 
     def __init__(self, name="No name given", balance=0):
@@ -23,6 +24,7 @@ tags = db.Table('tags',
 
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     name = db.Column(db.String(80))
     amount = db.Column(db.Integer)
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
@@ -31,8 +33,9 @@ class Transaction(db.Model):
     tags = db.relationship('Tag', secondary=tags,
                            backref=db.backref('transactions', lazy='dynamic'))
 
-    def __init__(self, name="", amount=0, wallet_id=1, category_id=1):
+    def __init__(self, user_id=0, name="", amount=0, wallet_id=1, category_id=1):
         self.name = name
+        self.user_id = user_id
         self.amount = amount
         self.wallet_id = wallet_id
         self.category_id = category_id
