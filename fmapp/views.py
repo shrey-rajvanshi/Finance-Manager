@@ -6,6 +6,7 @@ from fmapp import app, db
 from fmapp.models import *
 from fmapp.forms import LoginForm, SignupForm
 from fmapp.core_models import *
+from fmapp.auth import *
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -152,3 +153,37 @@ def signup():
         else:
             return "Some validation error"
     return render_template('signup.html', error=error)
+
+
+@app.route('/authorize/<provider>')
+def oauth_authorize(provider):
+    # Flask-Login function
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    oauth = OAuthSignIn.get_provider(provider)
+    return oauth.authorize()
+
+
+@app.route('/gcallback')
+def oauth_callback():
+    provider='google'
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    oauth = OAuthSignIn.get_provider(provider)
+    username, email = oauth.callback()
+    if email is None:
+        # I need a valid email address for my user identification
+        flash('Authentication failed.')
+        return redirect(url_for('home'))
+    # Look if the user already exists
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        nickname = username
+        if nickname is None or nickname == "":
+            nickname = email.split('@')[0]
+
+        user = User(username=nickname, email=email)
+        db.session.add(user)
+        db.session.commit()
+    login_user(user, remember=True)
+    return redirect(url_for('home'))

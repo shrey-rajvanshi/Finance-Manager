@@ -13,9 +13,11 @@ class User(db.Model, UserMixin):
     authenticated = db.Column(db.Boolean, default=False)
     last_synced = db.Column(db.String(10))
 
-    def __init__(self, username, password, email):
+    def __init__(self, username, email, password=None):
         self.username = username
         self.email = email
+        if password is None:
+            self.password = 'password'
         self.password = password
         self.authenticated = False
 
